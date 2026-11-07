@@ -1,19 +1,22 @@
-using System;
-using System.Windows.Forms;
+using System.ServiceProcess;
 
-namespace AprsScraper
+namespace MyAPRS;
+
+internal static class Program
 {
-    static class Program
+    [STAThread]
+    private static void Main(string[] args)
     {
-        [STAThread]
-        static void Main(string[] args)
+        if (args.Contains("--service"))
         {
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-            
-            // Check if launched by Windows Startup to start silently in the tray
-            bool startSilent = args.Length > 0 && args[0] == "--silent";
-            Application.Run(new MainForm(startSilent));
+            using var service = new LoggerService();
+            ServiceBase.Run(service);
+            return;
         }
+
+        using var instance = new Mutex(true, @"Local\MyAPRS.Tray", out bool first);
+        if (!first) return;
+        ApplicationConfiguration.Initialize();
+        Application.Run(new TrayApplication(args.Contains("--tray")));
     }
 }
