@@ -19,15 +19,15 @@ WizardStyle=modern
 Source: "publish\MyAPRS.exe"; DestDir: "{app}"; Flags: ignoreversion
 
 [Dirs]
-Name: "{commonappdata}\MyAPRS"; Permissions: users-read; Flags: uninsneveruninstall
-Name: "{commonappdata}\MyAPRS\data"; Permissions: users-read; Flags: uninsneveruninstall
+Name: "{commonappdata}\MyAPRS"; Permissions: users-readexec; Flags: uninsneveruninstall
+Name: "{commonappdata}\MyAPRS\data"; Permissions: users-readexec; Flags: uninsneveruninstall
 
 [Icons]
 Name: "{commonprograms}\MyAPRS"; Filename: "{app}\MyAPRS.exe"
 
 [Registry]
 Root: HKLM; Subkey: "Software\Microsoft\Windows\CurrentVersion\Run"; ValueType: string; ValueName: "MyAPRS"; ValueData: """{app}\MyAPRS.exe"" --tray"; Flags: uninsdeletevalue
-Root: HKCU; Subkey: "Software\Microsoft\Windows\CurrentVersion\Run"; ValueType: none; ValueName: "AprsTracker"; Flags: deletevalue uninsneveruninstall
+Root: HKCU; Subkey: "Software\Microsoft\Windows\CurrentVersion\Run"; ValueType: none; ValueName: "AprsTracker"; Flags: deletevalue
 
 [Run]
 Filename: "{app}\MyAPRS.exe"; Description: "Open MyAPRS"; Flags: nowait postinstall skipifsilent runasoriginaluser
